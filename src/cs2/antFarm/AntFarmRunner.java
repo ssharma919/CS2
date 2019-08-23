@@ -13,7 +13,9 @@ public class AntFarmRunner {
         world.add(new Cookie());
         world.add(new Cake());
         world.add(new QueenAnt());
-        world.add(new WorkerAnt());
+        for (int i = 0; i < 20; i++) {
+            world.add(new WorkerAnt());
+        }
 
         world.show();
     }
