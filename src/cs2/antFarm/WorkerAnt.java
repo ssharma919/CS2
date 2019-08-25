@@ -33,15 +33,17 @@ public class WorkerAnt extends Ant {
     }
 
     public void act() {
-        Location nextQ = this.getLocation().getAdjacentLocation(this.getLocation().getDirectionToward(this.getQueenLoc()));
-        Location nextF = this.getLocation().getAdjacentLocation(this.getLocation().getDirectionToward(this.getFoodLoc()));
-        if (this.getFood() != 0 && this.getQueenLoc() != null && this.getGrid().isValid(nextQ) == true && this.getGrid().get(nextQ) == null) {
-            this.setDirection(this.getLocation().getDirectionToward(nextQ));
-            moveTo(nextQ);
-        }
-        else if (this.getFood() == 0 && this.getFoodLoc() != null && this.getGrid().isValid(nextF) == true && this.getGrid().get(nextF) == null) {
-            this.setDirection(this.getLocation().getDirectionToward(nextF));
-            moveTo(nextF);
+        if (this.getQueenLoc() != null) {
+            Location next = selectMoveLocation(this);
+            if (this.getGrid().get(next) == null && this.getGrid().isValid(next) == true) {
+                if (this.getFood() != 0) {
+                    this.setDirection(this.getLocation().getDirectionToward(next));
+                    moveTo(next);
+                } else if (this.getFood() == 0 && this.getFoodLoc() != null) {
+                    this.setDirection(this.getLocation().getDirectionToward(next));
+                    moveTo(next);
+                }
+            }
         }
         else {
             ArrayList<Location> arr = this.getGrid().getEmptyAdjacentLocations(this.getLocation());
@@ -62,5 +64,22 @@ public class WorkerAnt extends Ant {
 
     public String toString() {
         return super.toString() + "foodLoc " + foodLoc + "queenLoc " + queenLoc;
+    }
+
+    private static Location selectMoveLocation(WorkerAnt ant) {
+        int rand = (int)(Math.random()*3);
+        ArrayList<Integer> arr = new ArrayList<>();
+        if (ant.getQueenLoc() != null && ant.getFood() != 0) {
+            arr.add(ant.getLocation().getDirectionToward(ant.queenLoc));
+            arr.add(ant.getLocation().getDirectionToward(ant.queenLoc) + Location.HALF_LEFT);
+            arr.add(ant.getLocation().getDirectionToward(ant.queenLoc) + Location.HALF_RIGHT);
+            return ant.getLocation().getAdjacentLocation(arr.get(rand));
+        } else if (ant.getFoodLoc() != null){
+            arr.add(ant.getLocation().getDirectionToward(ant.foodLoc));
+            arr.add(ant.getLocation().getDirectionToward(ant.foodLoc) + Location.HALF_LEFT);
+            arr.add(ant.getLocation().getDirectionToward(ant.foodLoc) + Location.HALF_RIGHT);
+            return ant.getLocation().getAdjacentLocation(arr.get(rand));
+        }
+        return ant.getLocation();
     }
 }
