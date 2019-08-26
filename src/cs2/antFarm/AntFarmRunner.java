@@ -1,3 +1,5 @@
+// Extension: Added ZombieAnt that kills WorkerAnts if they hold food. Takes WorkerAnts food and stores it for itself
+
 package cs2.antFarm;
 
 import info.gridworld.actor.Actor;
@@ -13,6 +15,7 @@ public class AntFarmRunner {
         world.add(new Cookie());
         world.add(new Cake());
         world.add(new QueenAnt());
+        world.add(new ZombieAnt());
         for (int i = 0; i < 20; i++) {
             world.add(new WorkerAnt());
         }
