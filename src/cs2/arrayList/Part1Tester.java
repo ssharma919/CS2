@@ -1,3 +1,5 @@
+// Extension: Added the methods indexOf, lastIndexOf, and clear
+
 package cs2.arrayList;
 
 public class Part1Tester {
@@ -80,5 +82,25 @@ public class Part1Tester {
         } catch (Exception e) {
             System.out.println(e);
         }
+
+        // test indexOf
+        System.out.println("\nAttempt to return index 3 from list");
+        for (int j = 0; j < 2; j++) {
+            for (int i = 0; i < 10; i++) {
+                list.add((double) i);
+            }
+        }
+        System.out.println(list);
+        System.out.println(list.indexOf(3.0));
+
+        // test lastIndexOf
+        System.out.println("\nAttempt to return index 13 from list");
+        System.out.println(list);
+        System.out.println(list.lastIndexOf(3.0));
+
+        // test clear
+        System.out.println("\nAttempt to clear list");
+        list.clear();
+        System.out.println(list);
     }
 }

@@ -28,7 +28,7 @@ public class CS2ArrayList<E> implements CS2List<E> {
     @Override
     public void add(int index, E obj) {
         if (myList.length == mySize || index >= mySize) this.expand();
-        if (index < 0) throw new IndexOutOfBoundsException();
+        if (index < 0) throw new IndexOutOfBoundsException("Attempted to access an index outside of the boundaries");
         for (int i = this.size(); i > index; i--) {
             myList[i] = myList[i-1];
         }
@@ -38,13 +38,13 @@ public class CS2ArrayList<E> implements CS2List<E> {
 
     @Override
     public E get(int index) {
-        if (index < 0 || index >= mySize) throw new IndexOutOfBoundsException();
+        if (index < 0 || index >= mySize || mySize == 0) throw new IndexOutOfBoundsException("Attempted to access an index outside of the boundaries");
         return myList[index];
     }
 
     @Override
     public E set(int index, E obj) {
-        if (index < 0 || index >= mySize) throw new IndexOutOfBoundsException();
+        if (index < 0 || index >= mySize || mySize == 0) throw new IndexOutOfBoundsException("Attempted to access an index outside of the boundaries");
         E temp = myList[index];
         myList[index] = obj;
         return temp;
@@ -52,7 +52,7 @@ public class CS2ArrayList<E> implements CS2List<E> {
 
     @Override
     public E remove(int index) {
-        if (index < 0 || index >= myList.length) throw new IndexOutOfBoundsException();
+        if (index < 0 || index >= myList.length || mySize == 0) throw new IndexOutOfBoundsException("Attempted to access an index outside of the boundaries");
         E temp = myList[index];
         for (int i = index; i < mySize; i++) {
             myList[i] = myList[i+1];
@@ -75,5 +75,23 @@ public class CS2ArrayList<E> implements CS2List<E> {
             arr[i] = myList[i];
         }
         myList = arr;
+    }
+
+    public int indexOf(Object o) {
+        for (int i = 0; i < mySize; i++) {
+            if (myList[i].equals(o)) return i;
+        }
+        return -1;
+    }
+
+    public int lastIndexOf(Object o) {
+        for (int i = mySize-1; i >= 0; i--) {
+            if (myList[i].equals(o)) return i;
+        }
+        return -1;
+    }
+
+    public void clear() {
+        mySize = 0;
     }
 }
