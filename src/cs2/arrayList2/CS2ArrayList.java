@@ -94,7 +94,7 @@ public class CS2ArrayList<E> implements CS2List<E>, Iterable<E> {
     public E remove(int index) {
         if (index < 0 || index >= myList.length || mySize == 0) throw new IndexOutOfBoundsException("Attempted to access an index outside of the boundaries");
         E temp = myList[index];
-        for (int i = index; i < mySize; i++) {
+        for (int i = index; i < mySize-1; i++) {
             myList[i] = myList[i+1];
         }
         mySize--;
@@ -177,6 +177,7 @@ public class CS2ArrayList<E> implements CS2List<E>, Iterable<E> {
 
         public void remove() {
             CS2ArrayList.this.remove(idx-1);
+            idx--;
         }
     }
 }

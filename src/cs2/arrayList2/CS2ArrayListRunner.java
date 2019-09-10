@@ -20,12 +20,20 @@ public class CS2ArrayListRunner {
             Double val = it.next();
             System.out.println (val + " ");
         }
-        System.out.println ();
-
-        for (Double val: list) {
-            System.out.println (val + " ");
+//        System.out.println ();
+//
+//        for (Double val: list) {
+//            System.out.println (val + " ");
+//        }
+//        System.out.println ();
+//
+        System.out.println (list);
+        it = list.iterator();
+        while (it.hasNext()) {
+            if (it.next() < 0.0) it.remove();
         }
-        System.out.println ();
+        System.out.println (list);
+
 
     }
 }
