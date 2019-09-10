@@ -20,20 +20,34 @@ public class CS2ArrayListRunner {
             Double val = it.next();
             System.out.println (val + " ");
         }
-//        System.out.println ();
-//
-//        for (Double val: list) {
-//            System.out.println (val + " ");
-//        }
-//        System.out.println ();
-//
+
         System.out.println (list);
         it = list.iterator();
         while (it.hasNext()) {
             if (it.next() < 0.0) it.remove();
         }
         System.out.println (list);
+        System.out.println();
 
+        try {
+            it.remove();
+            it.remove();
+        }
+        catch (Exception e) {
+            System.out.println ("Caught error attempting multiple removes");
+            System.out.println (e);
+        }
 
+        while(it.hasNext()) {
+            it.next();
+        }
+
+        try {
+            it.next();
+        }
+        catch (Exception e) {
+            System.out.println ("Caught error attempting next at end of list");
+            System.out.println (e);
+        }
     }
 }

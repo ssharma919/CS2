@@ -4,6 +4,8 @@ package cs2.arrayList2;
 import cs2.CS2List;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * This class creates an arrayList with all of its respective methods from an array
@@ -160,9 +162,15 @@ public class CS2ArrayList<E> implements CS2List<E>, Iterable<E> {
         return new CS2Iterator();
     }
 
-    private class CS2Iterator implements Iterator<E> {
+    public ListIterator<E> listIterator() {
+        return new CS2Iterator();
+    }
+
+    private class CS2Iterator implements Iterator<E>, ListIterator<E> {
 
         private int idx = 0;
+        private boolean calledNext = false;
+        private boolean calledPrevious = false;
 
         @Override
         public boolean hasNext() {
@@ -171,13 +179,66 @@ public class CS2ArrayList<E> implements CS2List<E>, Iterable<E> {
 
         @Override
         public E next() {
+            if (hasNext() == false) throw new IndexOutOfBoundsException("You are outside the array bounds");
             idx++;
+            calledNext = true;
             return CS2ArrayList.this.get(idx-1);
         }
 
-        public void remove() {
-            CS2ArrayList.this.remove(idx-1);
+        @Override
+        public boolean hasPrevious() {
+            return (idx > CS2ArrayList.this.mySize);
+        }
+
+        @Override
+        public E previous() {
+            if (hasPrevious() == false) throw new IndexOutOfBoundsException("You are outside the array bounds");
             idx--;
+            calledPrevious = true;
+            return CS2ArrayList.this.get(idx+1);
+        }
+
+        @Override
+        public int nextIndex() {
+            return idx;
+        }
+
+        @Override
+        public int previousIndex() {
+            return idx-1;
+        }
+
+        public void remove() {
+            if (calledNext == false || calledPrevious == false) throw new RuntimeException("Haven't called next");
+            if (CS2ArrayList.this.mySize == 0) throw new NullPointerException("List does not have any items");
+            if (calledNext || calledPrevious) {
+                if (calledNext) {
+                    CS2ArrayList.this.remove(idx - 1);
+                    calledNext = false;
+                    idx--;
+                }
+                if (calledPrevious) {
+                    CS2ArrayList.this.remove(idx + 1);
+                    calledPrevious = false;
+                    idx++;
+                }
+            }
+        }
+
+        @Override
+        public void set(E e) {
+            if (calledPrevious) {
+                CS2ArrayList.this.set(previousIndex(), e);
+            }
+            if (calledNext) {
+                CS2ArrayList.this.set(nextIndex(), e);
+            }
+        }
+
+        @Override
+        public void add(E e) {
+            CS2ArrayList.this.add(nextIndex(), e);
+            idx++;
         }
     }
 }
