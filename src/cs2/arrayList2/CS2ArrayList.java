@@ -69,7 +69,7 @@ public class CS2ArrayList<E> implements CS2List<E>, Iterable<E> {
      */
     @Override
     public E get(int index) {
-        if (index < 0 || index >= mySize || mySize == 0) throw new IndexOutOfBoundsException("Attempted to access an index outside of the boundaries");
+        if (index < 0 || index >= mySize) throw new IndexOutOfBoundsException("Attempted to access an index outside of the boundaries");
         return myList[index];
     }
 
@@ -81,7 +81,7 @@ public class CS2ArrayList<E> implements CS2List<E>, Iterable<E> {
      */
     @Override
     public E set(int index, E obj) {
-        if (index < 0 || index >= mySize || mySize == 0) throw new IndexOutOfBoundsException("Attempted to access an index outside of the boundaries");
+        if (index < 0 || index >= mySize) throw new IndexOutOfBoundsException("Attempted to access an index outside of the boundaries");
         E temp = myList[index];
         myList[index] = obj;
         return temp;
@@ -182,12 +182,13 @@ public class CS2ArrayList<E> implements CS2List<E>, Iterable<E> {
             if (hasNext() == false) throw new IndexOutOfBoundsException("You are outside the array bounds");
             idx++;
             calledNext = true;
+            calledPrevious = false;
             return CS2ArrayList.this.get(idx-1);
         }
 
         @Override
         public boolean hasPrevious() {
-            return (idx > CS2ArrayList.this.mySize);
+            return (idx > 0);
         }
 
         @Override
@@ -195,7 +196,8 @@ public class CS2ArrayList<E> implements CS2List<E>, Iterable<E> {
             if (hasPrevious() == false) throw new IndexOutOfBoundsException("You are outside the array bounds");
             idx--;
             calledPrevious = true;
-            return CS2ArrayList.this.get(idx+1);
+            calledNext = false;
+            return CS2ArrayList.this.get(idx);
         }
 
         @Override
@@ -209,7 +211,7 @@ public class CS2ArrayList<E> implements CS2List<E>, Iterable<E> {
         }
 
         public void remove() {
-            if (calledNext == false || calledPrevious == false) throw new RuntimeException("Haven't called next");
+            if (calledNext == false && calledPrevious == false) throw new RuntimeException("Haven't called next");
             if (CS2ArrayList.this.mySize == 0) throw new NullPointerException("List does not have any items");
             if (calledNext || calledPrevious) {
                 if (calledNext) {
@@ -218,9 +220,9 @@ public class CS2ArrayList<E> implements CS2List<E>, Iterable<E> {
                     idx--;
                 }
                 if (calledPrevious) {
-                    CS2ArrayList.this.remove(idx + 1);
+                    CS2ArrayList.this.remove(idx);
                     calledPrevious = false;
-                    idx++;
+
                 }
             }
         }
@@ -228,10 +230,10 @@ public class CS2ArrayList<E> implements CS2List<E>, Iterable<E> {
         @Override
         public void set(E e) {
             if (calledPrevious) {
-                CS2ArrayList.this.set(previousIndex(), e);
+                CS2ArrayList.this.set(previousIndex()+1, e);
             }
             if (calledNext) {
-                CS2ArrayList.this.set(nextIndex(), e);
+                CS2ArrayList.this.set(nextIndex()-1, e);
             }
         }
 
