@@ -47,7 +47,7 @@ public class CS2LinkedList<E> implements CS2List<E> {
 
     @Override
     public void add(int index, E obj) {
-        if (index > this.size()-1 || index < 0) throw new IndexOutOfBoundsException("Index is outside the boundaries");
+        if (index > this.size() || index < 0) throw new IndexOutOfBoundsException("Index is outside the boundaries");
         ListNode ln = new ListNode(obj);
         if (index == 0) {
             ListNode prevH = head;
@@ -68,7 +68,6 @@ public class CS2LinkedList<E> implements CS2List<E> {
             while (aNode.getNext() != null) aNode = aNode.getNext();
             aNode.setNext(ln);
         }
-
     }
 
     @Override
@@ -99,7 +98,28 @@ public class CS2LinkedList<E> implements CS2List<E> {
 
     @Override
     public E remove(int index) {
-        return null;
+        if (index > this.size()-1 || index < 0) throw new IndexOutOfBoundsException("Index is outside the boundaries");
+        ListNode ln;
+        if (index == 0) {
+            ln = head;
+            head = ln.next;
+        } else if (index > 0 && index < this.size()-1) {
+            int count = index;
+            ListNode aNode = head;
+            while (count != 1) {
+                aNode = aNode.getNext();
+                count--;
+            }
+            ln = aNode.getNext();
+            aNode.next = aNode.next.next;
+        } else {
+            ListNode aNode = head;
+            while (aNode.next.next != null) aNode = aNode.getNext();
+            ln = aNode.getNext();
+            aNode.next = null;
+
+        }
+        return ln.getValue();
     }
 
     private class ListNode {
