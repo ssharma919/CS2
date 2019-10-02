@@ -1,8 +1,10 @@
-package cs2.linkedList;
+package cs2.linkedList2;
 
 import cs2.CS2List;
 
-public class CS2LinkedList<E> implements CS2List<E> {
+import java.util.Iterator;
+
+public class CS2LinkedList<E> implements CS2List<E>, Iterable<E> {
     private ListNode head;
     private int mySize;
     private ListNode tail;
@@ -106,7 +108,8 @@ public class CS2LinkedList<E> implements CS2List<E> {
 
     @Override
     public E remove(int index) {
-        if (index > this.size()-1 || index < 0) throw new IndexOutOfBoundsException("Index is outside the boundaries");
+        if (index > this.size() - 1 || index < 0)
+            throw new IndexOutOfBoundsException("Index is outside the boundaries");
         if (head == null) {
             throw new RuntimeException("Attempted to remove from empty list.");
         }
@@ -133,29 +136,80 @@ public class CS2LinkedList<E> implements CS2List<E> {
         }
     }
 
-    private class ListNode {
-        private E value;
-        private ListNode next;
-
-        public ListNode (E e) {
-            value = e;
-            next = null;
-        }
-
-        public E getValue() {
-            return value;
-        }
-
-        public void setValue(E value) {
-            this.value = value;
-        }
-
-        public ListNode getNext() {
-            return next;
-        }
-
-        public void setNext(ListNode next) {
-            this.next = next;
-        }
+    @Override
+    public Iterator<E> iterator () {
+        return new CS2Iterator();
     }
-}
+
+        private class CS2Iterator implements Iterator<E> {
+
+            ListNode next = head;
+            ListNode previous = null;
+            ListNode prevPrevious = null;
+
+
+            @Override
+            public boolean hasNext() {
+                return next != null;
+            }
+
+            @Override
+            public E next() {
+                E originalNode = next.getValue();
+                if (previous == null) {
+                    previous = next;
+                } else {
+                    prevPrevious = previous;
+                    previous = next;
+                }
+                next = next.getNext();
+                return originalNode;
+            }
+
+            public void remove() {
+                if(prevPrevious == null){
+                    head = head.getNext();
+                    previous = prevPrevious;
+                if(head == null){
+                    tail = null;
+                }
+                mySize--;
+                }
+                else {
+                    if(next == null){
+                        tail = prevPrevious;
+                    }
+                    prevPrevious.next = next;
+                    previous = prevPrevious;
+                    mySize--;
+                }
+            }
+        }
+
+            private class ListNode {
+                private E value;
+                private ListNode next;
+
+                public ListNode(E e) {
+                    value = e;
+                    next = null;
+                }
+
+                public E getValue() {
+                    return value;
+                }
+
+                public void setValue(E value) {
+                    this.value = value;
+                }
+
+                public ListNode getNext() {
+                    return next;
+                }
+
+                public void setNext(ListNode next) {
+                    this.next = next;
+                }
+            }
+        }
+
