@@ -1,10 +1,10 @@
 package cs2.stack;
 
-import cs2.arrayList2.CS2ArrayList;
+import cs2.linkedList2.CS2LinkedList;
 
 import java.util.Iterator;
 
-public class CS2Stack<E> extends CS2ArrayList<E> {
+public class CS2Stack<E> extends CS2LinkedList<E> {
 
     public E push(E item) {
         super.add(item);
