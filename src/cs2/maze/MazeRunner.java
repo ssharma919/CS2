@@ -5,8 +5,9 @@ import info.gridworld.actor.Bug;
 
 public class MazeRunner {
     public static void main(String[] args) {
-        Maze maze = new Maze(20,20);
-        ActorWorld world = maze.printWorld(new Bug(),new Bug());
+        Maze maze = new Maze(10,10);
+        ActorWorld world = maze.printWorld(new Mouse(),new Cheese());
+//        maze.printWorld(new Mouse(), new Cheese()).show();
         world.show();
     }
 
