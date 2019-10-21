@@ -9,36 +9,46 @@ import java.util.Stack;
 public class Mouse extends Actor {
 
     private Stack<Location> stack;
+    private Stack<Location> stackNull;
     private Location nextLoc;
     private Location oldLoc;
-    private Location cheeseLoc;
+    private Location checkLoc;
 
     public Mouse () {
         stack = new Stack<>();
+        stackNull = new Stack<>();
         nextLoc = null;
         oldLoc = null;
-        cheeseLoc = null;
+        checkLoc = null;
     }
 
     public void act() {
         if (findCheese() != null) {
-            if (cheeseLoc != this.getLocation()) {
-                System.out.println("test");
-                cheeseLoc = this.findCheese();
-                this.getGrid().remove(cheeseLoc);
-                moveTo(cheeseLoc);
-            }
+            return;
         }
         else {
             ArrayList<Location> list = this.getLocs();
             for (int i = 0; i < list.size(); i++) {
                 stack.push(list.get(i));
+                stackNull.push(list.get(i));
+                if (list.size() > 1)
+                    stackNull.push(null);
             }
-            nextLoc = stack.pop();
-            oldLoc = this.getLocation();
-            this.setDirection(this.getLocation().getDirectionToward(nextLoc));
-            moveTo(nextLoc);
-            this.getGrid().put(oldLoc, new Breadcrumb());
+            checkLoc = stackNull.pop();
+            if (checkLoc == null) {
+                nextLoc = findBreadcrumb();
+                oldLoc = this.getLocation();
+                this.setDirection(this.getLocation().getDirectionToward(nextLoc));
+                moveTo(nextLoc);
+                this.getGrid().put(oldLoc, new Breadcrumb());
+            }
+            else {
+                nextLoc = stack.pop();
+                oldLoc = this.getLocation();
+                this.setDirection(this.getLocation().getDirectionToward(nextLoc));
+                moveTo(nextLoc);
+                this.getGrid().put(oldLoc, new Breadcrumb());
+            }
         }
     }
 
@@ -59,6 +69,16 @@ public class Mouse extends Actor {
             dir += 90;
         }
         return list;
+    }
+
+    private Location findBreadcrumb() {
+        ArrayList<Location> list = this.getGrid().getOccupiedAdjacentLocations(this.getLocation());
+        for (int i = 0; i < list.size(); i++) {
+            if (this.getGrid().get(list.get(i)) instanceof Breadcrumb) {
+                return list.get(i);
+            }
+        }
+        return null;
     }
 }
 
