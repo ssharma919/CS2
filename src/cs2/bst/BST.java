@@ -2,6 +2,9 @@ package cs2.bst;
 
 import sun.reflect.generics.tree.Tree;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class BST <E extends Comparable<E>> {
 
     private TreeNode root;
@@ -75,6 +78,65 @@ public class BST <E extends Comparable<E>> {
             else return -1;
         } else return -1;
     }
+
+    public List<E> inOrderTraversal() {
+        List<E> list = new LinkedList<E>();
+        inOrderTraversal (root, list);
+        return list;
+    }
+
+    private void inOrderTraversal(TreeNode subRoot, List<E> list) {
+        if (subRoot.getLeft() != null) inOrderTraversal(subRoot.getLeft(), list);
+        list.add(subRoot.getValue());
+        if (subRoot.getRight() != null) inOrderTraversal(subRoot.getRight(), list);
+    }
+
+    public List<E> reverseOrderTraversal() {
+        List<E> list = new LinkedList<E>();
+        reverseOrderTraversal (root, list);
+        return list;
+    }
+
+    private void reverseOrderTraversal(TreeNode subRoot, List<E> list) {
+        if (subRoot.getRight() != null) reverseOrderTraversal(subRoot.getRight(), list);
+        list.add(subRoot.getValue());
+        if (subRoot.getLeft() != null) reverseOrderTraversal(subRoot.getLeft(), list);
+    }
+
+    public List<E> preOrderTraversal() {
+        List<E> list = new LinkedList<E>();
+        preOrderTraversal (root, list);
+        return list;
+    }
+
+    private void preOrderTraversal(TreeNode subRoot, List<E> list) {
+        list.add(subRoot.getValue());
+        if (subRoot.getLeft() != null) preOrderTraversal(subRoot.getLeft(), list);
+        if (subRoot.getRight() != null) preOrderTraversal(subRoot.getRight(), list);
+    }
+
+    public List<E> postOrderTraversal() {
+        List<E> list = new LinkedList<E>();
+        postOrderTraversal (root, list);
+        return list;
+    }
+
+    private void postOrderTraversal(TreeNode subRoot, List<E> list) {
+        if (subRoot.getLeft() != null) postOrderTraversal(subRoot.getLeft(), list);
+        if (subRoot.getRight() != null) postOrderTraversal(subRoot.getRight(), list);
+        list.add(subRoot.getValue());
+    }
+
+//    public String toString() {
+//        return toString(root, 0);
+//    }
+
+//    private String toString(TreeNode subRoot, int level) {
+//        String s = "";
+//        if (subRoot.getRight() != null) {
+//
+//        }
+//    }
 
     private class TreeNode implements Comparable<TreeNode> {
 

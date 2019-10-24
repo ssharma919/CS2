@@ -32,12 +32,12 @@ public class BSTPart1Tester {
             System.out.println(v + " is at level " + tree.level(v));
         }
 
-//        System.out.println("\nTesting Traversals:\n");
-//        System.out.println ("in-order: " + tree.inOrderTraversal ());
-//        System.out.println ("reverse: " + tree.reverseOrderTraversal ());
-//        System.out.println ("pre-order: " + tree.preOrderTraversal());
-//        System.out.println ("post-order: " + tree.postOrderTraversal());
-//
+        System.out.println("\nTesting Traversals:\n");
+        System.out.println ("in-order: " + tree.inOrderTraversal ());
+        System.out.println ("reverse: " + tree.reverseOrderTraversal ());
+        System.out.println ("pre-order: " + tree.preOrderTraversal());
+        System.out.println ("post-order: " + tree.postOrderTraversal());
+
 //        System.out.println("\nTesting toString:\n");
 //        System.out.println(tree);
 //
