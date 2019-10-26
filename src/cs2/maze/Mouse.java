@@ -3,6 +3,7 @@ package cs2.maze;
 import info.gridworld.actor.Actor;
 import info.gridworld.grid.Location;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -29,11 +30,9 @@ public class Mouse extends Actor {
         else {
             ArrayList<Location> list = this.getLocs();
             if (list.size() == 0) startTrack = true;
-            if (!startTrack) {
-                stackTrack.push(this.getLocation());
-                for (int i = 0; i < list.size(); i++) {
-                    stack.push(list.get(i));
-                }
+            if (!startTrack) stackTrack.push(this.getLocation());
+            for (int i = 0; i < list.size(); i++) {
+                stack.push(list.get(i));
             }
             if (startTrack) {
                 if (list.contains(stack.peek())) {
@@ -41,10 +40,11 @@ public class Mouse extends Actor {
                     return;
                 }
                 nextLoc = stackTrack.pop();
-                System.out.println(nextLoc + " " + this.getLocation());
+                oldLoc = this.getLocation();
                 this.setDirection(this.getLocation().getDirectionToward(nextLoc));
                 this.getGrid().get(nextLoc).removeSelfFromGrid();
                 moveTo(nextLoc);
+                (new Breadcrumb2()).putSelfInGrid(this.getGrid(), oldLoc);
             }
             else {
                 nextLoc = stack.pop();
