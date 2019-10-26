@@ -1,8 +1,7 @@
 package cs2.postFix;
 
-import cs2.stack.CS2Stack;
-
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Runner {
     public static void main(String[] args) {
@@ -11,7 +10,7 @@ public class Runner {
         String s = rdr.next();
         double d;
         double temp;
-        CS2Stack<Double> stk = new CS2Stack();
+        Stack<Double> stk = new Stack();
         while (!s.equals("=")) {
             try {
                 d = Double.parseDouble(s);
