@@ -38,9 +38,9 @@ public class BSTPart1Tester {
         System.out.println ("pre-order: " + tree.preOrderTraversal());
         System.out.println ("post-order: " + tree.postOrderTraversal());
 
-//        System.out.println("\nTesting toString:\n");
-//        System.out.println(tree);
-//
+        System.out.println("\nTesting toString:\n");
+        System.out.println(tree);
+
     }
 }
 

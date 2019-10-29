@@ -1,7 +1,5 @@
 package cs2.bst;
 
-import sun.reflect.generics.tree.Tree;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -127,16 +125,26 @@ public class BST <E extends Comparable<E>> {
         list.add(subRoot.getValue());
     }
 
-//    public String toString() {
-//        return toString(root, 0);
-//    }
+    public String toString() {
+        return toString(root, 0);
+    }
 
-//    private String toString(TreeNode subRoot, int level) {
-//        String s = "";
-//        if (subRoot.getRight() != null) {
-//
-//        }
-//    }
+    private String toString(TreeNode subRoot, int level) {
+        String s = "";
+        if (subRoot.getRight() == null) {
+            for (int i = 0; i < level; i++) {
+                s += "-";
+            }
+            s += subRoot + "\n";
+        } else toString(subRoot.getRight(), level+1);
+        if (subRoot.getLeft() == null) {
+            for (int i = 0; i < level; i++) {
+                s += "-";
+            }
+            s += subRoot + "\n";
+        } else toString(subRoot.getLeft(), level+1);
+        return s;
+    }
 
     private class TreeNode implements Comparable<TreeNode> {
 
