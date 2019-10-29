@@ -1,5 +1,7 @@
 package cs2.bst;
 
+import cs2.bst2.BST;
+
 public class BSTPart1Tester {
     public static void main(String[] args) {
         BST<Integer> tree = new BST<Integer>();

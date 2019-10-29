@@ -1,4 +1,4 @@
-package cs2.bst;
+package cs2.bst2;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,10 +6,12 @@ import java.util.List;
 public class BST <E extends Comparable<E>> {
 
     private TreeNode root;
+    private int size = 0;
 
     public boolean add (E value) {
         if (root == null) {
             root = new TreeNode (value);
+            size++;
             return true;
         } else {
             return add (root, new TreeNode(value));
@@ -21,12 +23,14 @@ public class BST <E extends Comparable<E>> {
             if (subRoot.getLeft() == null) {
                 subRoot.setLeft(node);
                 node.setParent(subRoot);
+                size++;
                 return true;
             } else return add(subRoot.getLeft(), node);
         } else if (node.compareTo(subRoot) > 0) {
             if (subRoot.getRight() == null) {
                 subRoot.setRight(node);
                 node.setParent(subRoot);
+                size++;
                 return true;
             } else return add(subRoot.getRight(), node);
         } else return false;
@@ -130,20 +134,114 @@ public class BST <E extends Comparable<E>> {
     }
 
     private String toString(TreeNode subRoot, int level) {
-        String s = "";
-        if (subRoot.getRight() == null) {
-            for (int i = 0; i < level; i++) {
-                s += "-";
-            }
-            s += subRoot + "\n";
-        } else toString(subRoot.getRight(), level+1);
-        if (subRoot.getLeft() == null) {
-            for (int i = 0; i < level; i++) {
-                s += "-";
-            }
-            s += subRoot + "\n";
-        } else toString(subRoot.getLeft(), level+1);
+        if (subRoot == null) return "";
+        String s = toString(subRoot.getRight(), level + 1);
+        for (int i = 0; i < level; i++) s += "- ";
+        s = s + subRoot.getValue() + "\n";
+        s += toString(subRoot.getLeft(), level + 1);
         return s;
+    }
+
+    public void clear() {
+        root = null;
+        size = 0;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean remove(E obj) {
+        return remove(new TreeNode(obj));
+    }
+
+    private boolean remove(TreeNode subRoot) {
+        if (!contains(root, subRoot)) return false;
+
+        // leaf case
+        if (subRoot.getLeft() == null && subRoot.getRight() == null) {
+
+            // root case
+            if (subRoot.equals(root)) {
+                clear();
+                return true;
+            }
+
+            // left case
+            else if (subRoot.compareTo(subRoot.getParent()) < 0) {
+                subRoot.getParent().setLeft(null);
+                return true;
+            }
+
+            // right case
+            else {
+                subRoot.getParent().setRight(null);
+                return true;
+            }
+        }
+
+        // one-child case
+        else if ((subRoot.getRight() != null && subRoot.getLeft() == null) || (subRoot.getRight() == null && subRoot.getLeft() != null)) {
+
+            // root case
+            if (subRoot.equals(root)) {
+                if (root.getLeft() != null) {
+                    root = root.getLeft();
+                    return true;
+                } else {
+                    root = root.getRight();
+                    return true;
+                }
+            }
+
+            // parent left
+            else if (subRoot.compareTo(subRoot.getParent()) < 0) {
+
+                // child left case
+                if (subRoot.getLeft() != null) {
+                    subRoot.getParent().setLeft(subRoot.getLeft());
+                    subRoot.getLeft().setParent(subRoot.getParent());
+                    return true;
+                }
+
+                // child right case
+                else {
+                    subRoot.getParent().setLeft(subRoot.getRight());
+                    subRoot.getRight().setParent(subRoot.getParent());
+                    return true;
+                }
+            }
+
+            // parent right
+            else {
+
+                // child left case
+                if (subRoot.getLeft() != null) {
+                    subRoot.getParent().setRight(subRoot.getLeft());
+                    subRoot.getLeft().setParent(subRoot.getParent());
+                    return true;
+                }
+
+                // child right case
+                else {
+                    subRoot.getParent().setRight(subRoot.getRight());
+                    subRoot.getRight().setParent(subRoot.getParent());
+                    return true;
+                }
+            }
+        }
+
+        // two-child case
+        else {
+
+            // root case
+            if (subRoot.equals(root)) {
+                TreeNode temp = root.getRight();
+                root = root.getLeft();
+                root.setRight(temp);
+            }
+        }
+        return false;
     }
 
     private class TreeNode implements Comparable<TreeNode> {
