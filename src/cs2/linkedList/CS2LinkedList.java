@@ -15,13 +15,14 @@ public class CS2LinkedList<E> implements CS2List<E> {
 
     @Override
     public int size() {
-        ListNode aNode = head;
-        int count = 0;
-        while (aNode != null) {
-            count++;
-            aNode = aNode.getNext();
-        }
-        return count;
+//        ListNode aNode = head;
+//        int count = 0;
+//        while (aNode != null) {
+//            count++;
+//            aNode = aNode.getNext();
+//        }
+//        return count;
+        return mySize;
     }
 
     @Override

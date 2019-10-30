@@ -129,6 +129,8 @@ public class CS2LinkedList<E> implements CS2List<E>, Iterable<E> {
             for (int i = 0; i < index - 1; i++) {
                 pointer = pointer.getNext();
             }
+            if (mySize-1 == index)
+                tail = pointer;
             E obj = pointer.next.getValue();
             pointer.setNext(pointer.next.next);
             mySize--;
