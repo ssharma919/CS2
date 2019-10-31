@@ -20,58 +20,58 @@ public class BSTPart2Tester {
         for (int i: vals) tree.add (i);
         System.out.println ("Size is: " + tree.size());
         System.out.println (tree);
-//
-//        // removals
-//        System.out.println("Testing removes/size: ");
-//        System.out.print("Removed leaf node (8): ");
-//        System.out.println(tree.remove(8));
-//        System.out.println ("Size is: " + tree.size());
-//        System.out.println (tree);
-//
-//        System.out.println("Restoring tree...");
-//        tree.clear();
-//        for (int i: vals) tree.add (i);
-//
-//        System.out.print("Removed one-child node (6): ");
-//        System.out.println(tree.remove(6));
-//        System.out.println ("Size is: " + tree.size());
-//        System.out.println (tree);
-//
-//        System.out.println("Restoring tree...");
-//        tree.clear();
-//        for (int i: vals) tree.add (i);
-//
-//        System.out.print("Removed two-child node (4): ");
-//        System.out.println(tree.remove(4));
-//        System.out.println ("Size is: " + tree.size());
-//        System.out.println (tree);
-//
-//        System.out.println("Restoring tree...");
-//        tree.clear();
-//        for (int i: vals) tree.add (i);
-//
-//        System.out.print("Removed 2-child root (2): ");
-//        System.out.println(tree.remove(2));
-//        System.out.println ("Size is: " + tree.size());
-//        System.out.println (tree);
-//
-//        System.out.print("Removed 1-child root (1): ");
-//        System.out.println(tree.remove(1));
-//        System.out.println ("Size is: " + tree.size());
-//        System.out.println (tree);
-//
-//        System.out.print("Removed (1) again: ");
-//        System.out.println(tree.remove(1));
-//        System.out.println ("Size is: " + tree.size());
-//        System.out.println (tree);
-//
-//        System.out.println("Remove remaining values");
-//        for (int i=3; i<=9; i++) {
-//            System.out.println("Remove " + i + ": " + tree.remove(i));
-//            System.out.println("Size is: " + tree.size());
-//            System.out.println(tree);
-//        }
-//
+
+        // removals
+        System.out.println("Testing removes/size: ");
+        System.out.print("Removed leaf node (8): ");
+        System.out.println(tree.remove(8));
+        System.out.println ("Size is: " + tree.size());
+        System.out.println (tree);
+
+        System.out.println("Restoring tree...");
+        tree.clear();
+        for (int i: vals) tree.add (i);
+
+        System.out.print("Removed one-child node (6): ");
+        System.out.println(tree.remove(6));
+        System.out.println ("Size is: " + tree.size());
+        System.out.println (tree);
+
+        System.out.println("Restoring tree...");
+        tree.clear();
+        for (int i: vals) tree.add (i);
+
+        System.out.print("Removed two-child node (4): ");
+        System.out.println(tree.remove(4));
+        System.out.println ("Size is: " + tree.size());
+        System.out.println (tree);
+
+        System.out.println("Restoring tree...");
+        tree.clear();
+        for (int i: vals) tree.add (i);
+
+        System.out.print("Removed 2-child root (2): ");
+        System.out.println(tree.remove(2));
+        System.out.println ("Size is: " + tree.size());
+        System.out.println (tree);
+
+        System.out.print("Removed 1-child root (1): ");
+        System.out.println(tree.remove(1));
+        System.out.println ("Size is: " + tree.size());
+        System.out.println (tree);
+
+        System.out.print("Removed (1) again: ");
+        System.out.println(tree.remove(1));
+        System.out.println ("Size is: " + tree.size());
+        System.out.println (tree);
+
+        System.out.println("Remove remaining values");
+        for (int i=3; i<=9; i++) {
+            System.out.println("Remove " + i + ": " + tree.remove(i));
+            System.out.println("Size is: " + tree.size());
+            System.out.println(tree);
+        }
+
 //        System.out.println("\nRestoring tree...");
 //        tree.clear();
 //        for (int i: vals) tree.add (i);

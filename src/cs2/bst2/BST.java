@@ -152,96 +152,111 @@ public class BST <E extends Comparable<E>> {
     }
 
     public boolean remove(E obj) {
-        return remove(new TreeNode(obj));
+        return remove(root, new TreeNode(obj));
     }
 
-    private boolean remove(TreeNode subRoot) {
-        if (!contains(root, subRoot)) return false;
+    private boolean remove(TreeNode subRoot, TreeNode node) {
+        if (subRoot.equals(node)) {
 
-        // leaf case
-        if (subRoot.getLeft() == null && subRoot.getRight() == null) {
+            // leaf case
+            if (node.getLeft() == null && node.getRight() == null) {
 
-            // root case
-            if (subRoot.equals(root)) {
-                clear();
-                return true;
-            }
-
-            // left case
-            else if (subRoot.compareTo(subRoot.getParent()) < 0) {
-                subRoot.getParent().setLeft(null);
-                return true;
-            }
-
-            // right case
-            else {
-                subRoot.getParent().setRight(null);
-                return true;
-            }
-        }
-
-        // one-child case
-        else if ((subRoot.getRight() != null && subRoot.getLeft() == null) || (subRoot.getRight() == null && subRoot.getLeft() != null)) {
-
-            // root case
-            if (subRoot.equals(root)) {
-                if (root.getLeft() != null) {
-                    root = root.getLeft();
-                    return true;
-                } else {
-                    root = root.getRight();
-                    return true;
-                }
-            }
-
-            // parent left
-            else if (subRoot.compareTo(subRoot.getParent()) < 0) {
-
-                // child left case
-                if (subRoot.getLeft() != null) {
-                    subRoot.getParent().setLeft(subRoot.getLeft());
-                    subRoot.getLeft().setParent(subRoot.getParent());
-                    return true;
+                // root case
+                if (node.equals(root)) {
+                    clear();
                 }
 
-                // child right case
+                // left case
+//            System.out.println(subRoot + "resgs");
+//            System.out.println(subRoot.getParent());
+                else if (node.compareTo(node.getParent()) < 0) {
+                    node.getParent().setLeft(null);
+                }
+
+                // right case
                 else {
-                    subRoot.getParent().setLeft(subRoot.getRight());
-                    subRoot.getRight().setParent(subRoot.getParent());
-                    return true;
+                    node.getParent().setRight(null);
                 }
             }
 
-            // parent right
+            // one-child case
+            else if ((node.getRight() != null && node.getLeft() == null) || (node.getRight() == null && node.getLeft() != null)) {
+
+                // root case
+                if (node.equals(root)) {
+                    if (root.getLeft() != null) {
+                        root = root.getLeft();
+                    } else {
+                        root = root.getRight();
+                    }
+                }
+
+                // parent left
+                else if (node.compareTo(node.getParent()) < 0) {
+
+                    // child left case
+                    if (node.getLeft() != null) {
+                        node.getParent().setLeft(node.getLeft());
+                        node.getLeft().setParent(node.getParent());
+                    }
+
+                    // child right case
+                    else {
+                        node.getParent().setLeft(node.getRight());
+                        node.getRight().setParent(node.getParent());
+                    }
+                }
+
+                // parent right
+                else {
+
+                    // child left case
+                    if (node.getLeft() != null) {
+                        node.getParent().setRight(node.getLeft());
+                        node.getLeft().setParent(node.getParent());
+                    }
+
+                    // child right case
+                    else {
+                        node.getParent().setRight(node.getRight());
+                        node.getRight().setParent(node.getParent());
+                    }
+                }
+            }
+
+            // two-child case
             else {
 
-                // child left case
-                if (subRoot.getLeft() != null) {
-                    subRoot.getParent().setRight(subRoot.getLeft());
-                    subRoot.getLeft().setParent(subRoot.getParent());
-                    return true;
+                // root case
+                if (node.equals(root)) {
+                    node = node.getLeft();
+                    while (node.getRight() != null) {
+                        node = node.getRight();
+                    }
+                    root.setValue(node.getValue());
+                    remove(root, node);
                 }
 
-                // child right case
+                // general case
                 else {
-                    subRoot.getParent().setRight(subRoot.getRight());
-                    subRoot.getRight().setParent(subRoot.getParent());
-                    return true;
+                    TreeNode originalSubRoot = node;
+                    node = node.getLeft();
+                    while (node.getRight() != null) {
+                        node = node.getRight();
+                    }
+                    originalSubRoot.setValue(node.getValue());
+                    remove(root, node);
                 }
             }
+            size--;
+            return true;
         }
 
-        // two-child case
-        else {
-
-            // root case
-            if (subRoot.equals(root)) {
-                TreeNode temp = root.getRight();
-                root = root.getLeft();
-                root.setRight(temp);
-            }
-        }
-        return false;
+        else if (node.compareTo(subRoot) < 0) {
+            return remove(subRoot.getLeft(), node);
+        } else if (node.compareTo(subRoot) > 0) {
+            return remove(subRoot.getRight(), node);
+        } else return false;
     }
 
     private class TreeNode implements Comparable<TreeNode> {
