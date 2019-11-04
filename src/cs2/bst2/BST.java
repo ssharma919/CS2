@@ -157,7 +157,7 @@ public class BST <E extends Comparable<E>> {
 
     private boolean remove(TreeNode subRoot, TreeNode node) {
         if (subRoot.equals(node)) {
-
+            node = subRoot;
             // leaf case
             if (node.getLeft() == null && node.getRight() == null) {
 
@@ -167,8 +167,6 @@ public class BST <E extends Comparable<E>> {
                 }
 
                 // left case
-//            System.out.println(subRoot + "resgs");
-//            System.out.println(subRoot.getParent());
                 else if (node.compareTo(node.getParent()) < 0) {
                     node.getParent().setLeft(null);
                 }
@@ -234,7 +232,8 @@ public class BST <E extends Comparable<E>> {
                         node = node.getRight();
                     }
                     root.setValue(node.getValue());
-                    remove(root, node);
+                    remove(subRoot.getLeft(), node);
+                    size++;
                 }
 
                 // general case
@@ -245,13 +244,13 @@ public class BST <E extends Comparable<E>> {
                         node = node.getRight();
                     }
                     originalSubRoot.setValue(node.getValue());
-                    remove(root, node);
+                    remove(subRoot.getLeft(), node);
+                    size++;
                 }
             }
             size--;
             return true;
         }
-
         else if (node.compareTo(subRoot) < 0) {
             return remove(subRoot.getLeft(), node);
         } else if (node.compareTo(subRoot) > 0) {
