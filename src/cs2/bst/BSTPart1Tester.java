@@ -1,7 +1,5 @@
 package cs2.bst;
 
-import cs2.bst2.BST;
-
 public class BSTPart1Tester {
     public static void main(String[] args) {
         BST<Integer> tree = new BST<Integer>();
@@ -39,6 +37,7 @@ public class BSTPart1Tester {
         System.out.println ("reverse: " + tree.reverseOrderTraversal ());
         System.out.println ("pre-order: " + tree.preOrderTraversal());
         System.out.println ("post-order: " + tree.postOrderTraversal());
+        System.out.println ("level-order: " + tree.levelOrderTraversal());
 
         System.out.println("\nTesting toString:\n");
         System.out.println(tree);
