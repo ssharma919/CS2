@@ -225,28 +225,31 @@ public class BST <E extends Comparable<E>> {
             // two-child case
             else {
 
-                // root case
-                if (node.equals(root)) {
-                    node = node.getLeft();
-                    while (node.getRight() != null) {
-                        node = node.getRight();
+//                // root case
+//                if (node.equals(root)) {
+//                    node = node.getLeft();
+//                    while (node.getRight() != null) {
+//                        node = node.getRight();
+//                    }
+//                    root.setValue(node.getValue());
+//                    remove(subRoot.getLeft(), node);
+//                    size++;
+//                }
+//
+//                // general case
+//                else {
+                    TreeNode traversedSubRoot = subRoot;
+                    traversedSubRoot = traversedSubRoot.getLeft();
+                    while (traversedSubRoot.getRight() != null) {
+                        traversedSubRoot = traversedSubRoot.getRight();
                     }
-                    root.setValue(node.getValue());
-                    remove(subRoot.getLeft(), node);
+                    System.out.println(this);
+                    subRoot.setValue(traversedSubRoot.getValue());
+                System.out.println(this);
+                    remove(subRoot.getLeft(), traversedSubRoot);
+                System.out.println(this);
                     size++;
-                }
-
-                // general case
-                else {
-                    TreeNode originalSubRoot = node;
-                    node = node.getLeft();
-                    while (node.getRight() != null) {
-                        node = node.getRight();
-                    }
-                    originalSubRoot.setValue(node.getValue());
-                    remove(subRoot.getLeft(), node);
-                    size++;
-                }
+//                }
             }
             size--;
             return true;
