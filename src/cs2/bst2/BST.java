@@ -157,18 +157,19 @@ public class BST <E extends Comparable<E>> {
     }
 
     private boolean remove(TreeNode subRoot, TreeNode node) {
+        if (subRoot == null) return false;
         if (subRoot.equals(node)) {
 
             // leaf case
             if (node.getLeft() == null && node.getRight() == null) {
                 node = subRoot;
                 // root case
-                if (node.equals(root)) {
+                if (node == root) {
                     clear();
                 }
 
                 // left case
-                else if (node.compareTo(node.getParent()) < 0) {
+                else if (node.getParent().getLeft() == node) {
                     node.getParent().setLeft(null);
                 }
 
@@ -223,21 +224,17 @@ public class BST <E extends Comparable<E>> {
                 }
             }
 
-            // two-child case
-//            else {
-//
-//                TreeNode traversedSubRoot = subRoot;
-//                traversedSubRoot = traversedSubRoot.getLeft();
-//                while (traversedSubRoot.getRight() != null) {
-//                    traversedSubRoot = traversedSubRoot.getRight();
-//                }
-//                System.out.println(this);
-//                subRoot.setValue(traversedSubRoot.getValue());
-//                System.out.println(this);
-//                remove(subRoot.getLeft(), traversedSubRoot);
-//                System.out.println(this);
-//                size++;
-//            }
+//             two-child case
+            else {
+                TreeNode traversedSubRoot = subRoot;
+                traversedSubRoot = traversedSubRoot.getLeft();
+                while (traversedSubRoot.getRight() != null) {
+                    traversedSubRoot = traversedSubRoot.getRight();
+                }
+                subRoot.setValue(traversedSubRoot.getValue());
+                remove(subRoot.getLeft(), traversedSubRoot);
+                size++;
+            }
             size--;
             return true;
         }
