@@ -1,14 +1,21 @@
 package cs2.heap;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Heap<E extends Comparable<E>> {
 
-    private ArrayList<E> list = new ArrayList<>();
+    private ArrayList<E> list;
+
+    public Heap() {
+        list = new ArrayList<>();
+    }
+
 
     public void add(E obj) {
         list.add(obj);
-        int parent = this.parent(this.size()-1);
+        int parent = this.parent(this.size() - 1);
         while (obj.compareTo(list.get(parent)) < 0) {
             E temp = list.get(parent);
             list.set(list.indexOf(obj), temp);
@@ -46,19 +53,19 @@ public class Heap<E extends Comparable<E>> {
     }
 
     private int rightChild(int i) {
-        return ((i*2)+2);
+        return ((i * 2) + 2);
     }
 
     private int leftChild(int i) {
-        return ((i*2)+1);
+        return ((i * 2) + 1);
     }
 
     private int parent(int i) {
-        return ((i-1)/2);
+        return ((i - 1) / 2);
     }
 
     private int level(int i) {
-        return (int) (Math.floor(Math.log(i+1)/Math.log(2)));
+        return (int) (Math.floor(Math.log(i + 1) / Math.log(2)));
     }
 
     public String toString() {
@@ -85,5 +92,38 @@ public class Heap<E extends Comparable<E>> {
 
     public boolean isEmpty() {
         return (this.size() == 0);
+    }
+
+    public Iterator<E> iterator() {
+        return new CS2HeapIterator();
+    }
+
+    private class CS2HeapIterator implements Iterator<E> {
+        ArrayList<E> list;
+        private int iterNext;
+
+        public CS2HeapIterator() {
+            for (int i = 0; i < Heap.this.size(); i++) {
+                list.add(Heap.this.remove());
+            }
+            for (int i = 0; i < list.size(); i++) {
+                Heap.this.add(list.get(i));
+            }
+        }
+
+        public E next() {
+            if (!hasNext()) throw new RuntimeException("There are no more items in the list");
+            E obj = list.get(iterNext);
+            iterNext++;
+            return obj;
+        }
+
+        public boolean hasNext() {
+            return !(iterNext >= list.size());
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 }
