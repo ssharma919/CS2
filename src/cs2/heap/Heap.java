@@ -6,13 +6,42 @@ public class Heap<E extends Comparable<E>> {
 
     private ArrayList<E> list = new ArrayList<>();
 
-    public void add(E obj) { // fix the parent to be changed inside the while loop
+    public void add(E obj) {
         list.add(obj);
         int parent = this.parent(this.size()-1);
         while (obj.compareTo(list.get(parent)) < 0) {
             E temp = list.get(parent);
+            list.set(list.indexOf(obj), temp);
             list.set(parent, obj);
-            list.set(this.size()-1, temp);
+            parent = this.parent(parent);
+        }
+    }
+
+    public E remove() {
+        if (this.size() == 0) throw new NullPointerException("Attempted to remove from empty heap");
+        if (this.size() == 1) {
+            E temp = list.get(0);
+            this.clear();
+            return temp;
+        } else {
+            E temp = list.get(0);
+            list.set(0, list.remove(this.size() - 1));
+            E obj = list.get(0);
+            int index = 0;
+            while ((this.size() > this.leftChild(index) && this.size() > this.rightChild(index)) && (obj.compareTo(list.get(this.leftChild(index))) > 0 || obj.compareTo(list.get(this.rightChild(index))) > 0)) {
+                if (list.get(this.leftChild(index)).compareTo(list.get(this.rightChild(index))) < 0) {
+                    E tempLeft = list.get(this.leftChild(index));
+                    list.set(this.leftChild(index), obj);
+                    list.set(index, tempLeft);
+                    index = list.indexOf(obj);
+                } else {
+                    E tempRight = list.get(this.rightChild(index));
+                    list.set(this.rightChild(index), obj);
+                    list.set(index, tempRight);
+                    index = list.indexOf(obj);
+                }
+            }
+            return temp;
         }
     }
 

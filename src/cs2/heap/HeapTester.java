@@ -12,6 +12,7 @@ public class HeapTester {
         System.out.println (h);
         h.clear ();
         System.out.println (h);
+        System.out.println();
 
         h.add (90);
         h.add (75);
@@ -20,6 +21,10 @@ public class HeapTester {
         h.add (20);
         h.add (12);
         System.out.println (h);
+
+        while (!h.isEmpty()) {
+            System.out.print(h.remove() + " ");
+        }
 
     }
 }
