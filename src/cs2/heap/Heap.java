@@ -2,7 +2,6 @@ package cs2.heap;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class Heap<E extends Comparable<E>> {
 
@@ -12,14 +11,15 @@ public class Heap<E extends Comparable<E>> {
         list = new ArrayList<>();
     }
 
-
     public void add(E obj) {
         list.add(obj);
         int parent = this.parent(this.size() - 1);
+        int objIdx = this.size()-1;
         while (obj.compareTo(list.get(parent)) < 0) {
             E temp = list.get(parent);
-            list.set(list.indexOf(obj), temp);
+            list.set(objIdx, temp);
             list.set(parent, obj);
+            objIdx = parent;
             parent = this.parent(parent);
         }
     }
@@ -40,12 +40,12 @@ public class Heap<E extends Comparable<E>> {
                     E tempLeft = list.get(this.leftChild(index));
                     list.set(this.leftChild(index), obj);
                     list.set(index, tempLeft);
-                    index = list.indexOf(obj);
+                    index = this.leftChild(index);
                 } else {
                     E tempRight = list.get(this.rightChild(index));
                     list.set(this.rightChild(index), obj);
                     list.set(index, tempRight);
-                    index = list.indexOf(obj);
+                    index = this.rightChild(index);
                 }
             }
             return temp;

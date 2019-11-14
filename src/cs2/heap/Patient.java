@@ -24,12 +24,17 @@ public class Patient implements Comparable<Patient> {
     private static int dir = ASC;   // default ascending
     private static int sortBy = BY_CONDITION;   // default by condition
 
+    private static int age = 0;
+
     private String name;
     private int condition;
+    private int indAge;
 
     public Patient(String name, int condition){
         this.name = name;
         this.condition = condition;
+        indAge = age;
+        age++;
     }
 
     public int getCondition() {
@@ -46,7 +51,8 @@ public class Patient implements Comparable<Patient> {
             comp = this.name.compareTo(other.name);
         }
         else {
-            comp = this.condition - other.condition;
+            if (this.condition - other.condition == 0) comp = this.indAge - other.indAge;
+            else comp = this.condition - other.condition;
         }
 
         if (dir == ASC) {
