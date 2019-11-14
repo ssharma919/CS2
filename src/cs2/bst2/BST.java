@@ -1,5 +1,6 @@
 package cs2.bst2;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -159,13 +160,14 @@ public class BST <E extends Comparable<E>> {
     private boolean remove(TreeNode subRoot, TreeNode node) {
         if (subRoot == null) return false;
         if (subRoot.equals(node)) {
-
+            node = subRoot;
             // leaf case
             if (node.getLeft() == null && node.getRight() == null) {
                 node = subRoot;
                 // root case
                 if (node == root) {
                     clear();
+                    size++;
                 }
 
                 // left case
@@ -301,6 +303,30 @@ public class BST <E extends Comparable<E>> {
 
         public String toString() {
             return ("" + this.getValue());
+        }
+
+        public Iterator<E> iterator () {
+            return new CS2TreeIterator();
+        }
+
+        private class CS2TreeIterator implements Iterator<E> {
+            List<E> list = inOrderTraversal();
+            private int iterNext = 0;
+
+            public E next(){
+                if (!hasNext()) throw new RuntimeException("There are no more items in the list");
+                E obj = list.get(iterNext);
+                iterNext++;
+                return obj;
+            }
+
+            public boolean hasNext(){
+                return !(iterNext >= list.size());
+            }
+
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
         }
     }
 }

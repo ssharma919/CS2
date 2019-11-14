@@ -72,11 +72,11 @@ public class BSTPart2Tester {
             System.out.println(tree);
         }
 
-//        System.out.println("\nRestoring tree...");
-//        tree.clear();
-//        for (int i: vals) tree.add (i);
-//        System.out.println(tree);
-//
+        System.out.println("\nRestoring tree...");
+        tree.clear();
+        for (int i: vals) tree.add (i);
+        System.out.println(tree);
+
 //        System.out.println("Testing iterator with enhanced-for");
 //        for (Integer i: tree) {
 //            System.out.print(i+ " ");
