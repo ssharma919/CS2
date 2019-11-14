@@ -77,9 +77,9 @@ public class BSTPart2Tester {
         for (int i: vals) tree.add (i);
         System.out.println(tree);
 
-//        System.out.println("Testing iterator with enhanced-for");
-//        for (Integer i: tree) {
-//            System.out.print(i+ " ");
-//        }
+        System.out.println("Testing iterator with enhanced-for");
+        for (Integer i: tree) {
+            System.out.print(i+ " ");
+        }
     }
 }
