@@ -100,7 +100,7 @@ public class Heap<E extends Comparable<E>> {
 
     private class CS2HeapIterator implements Iterator<E> {
         ArrayList<E> list;
-        private int iterNext;
+        private int idx = 0;
 
         public CS2HeapIterator() {
             for (int i = 0; i < Heap.this.size(); i++) {
@@ -113,13 +113,12 @@ public class Heap<E extends Comparable<E>> {
 
         public E next() {
             if (!hasNext()) throw new RuntimeException("There are no more items in the list");
-            E obj = list.get(iterNext);
-            iterNext++;
-            return obj;
+            idx++;
+            return list.get(idx-1);
         }
 
         public boolean hasNext() {
-            return !(iterNext >= list.size());
+            return (idx < list.size());
         }
 
         public void remove() {
