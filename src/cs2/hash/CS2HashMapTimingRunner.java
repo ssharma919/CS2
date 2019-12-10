@@ -4,7 +4,7 @@ public class CS2HashMapTimingRunner {
     public static void main(String[] args) {
         int n = 10000;
         System.out.println("size\tput\tget");
-        for (int i = 1; i < 2*n; i++) {
+        for (int i = 1; i < 2*n+1; i++) {
             CS2HashMap<Double, Double> map = new CS2HashMap<>(i);
             long pStart = System.nanoTime();
             for (int j = 0; j < n; j++) {

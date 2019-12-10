@@ -21,12 +21,12 @@ public class CS2HashMap<K extends Comparable<K>, V> {
     }
 
     public V get(K key) {
-        int bucket = key.hashCode() % list.size();
+        int bucket = Math.abs(key.hashCode() % list.size());
         return list.get(bucket).get(key);
     }
 
     public V put(K key, V value) {
-        int bucket = key.hashCode() % list.size();
+        int bucket = Math.abs(key.hashCode() % list.size());
         V val = list.get(bucket).get(key);
         list.get(bucket).put(key, value);
         return val;
@@ -44,7 +44,7 @@ public class CS2HashMap<K extends Comparable<K>, V> {
     }
 
     public boolean containsKey(K key) {
-        int bucket = key.hashCode() % list.size();
+        int bucket = Math.abs(key.hashCode() % list.size());
         return list.get(bucket).containsKey(key);
     }
 
@@ -68,7 +68,7 @@ public class CS2HashMap<K extends Comparable<K>, V> {
     }
 
     public V remove(K key) {
-        int bucket = key.hashCode() % list.size();
+        int bucket = Math.abs(key.hashCode() % list.size());
         return list.get(bucket).remove(key);
     }
 
